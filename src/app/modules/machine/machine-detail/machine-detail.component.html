@@ -1,0 +1,69 @@
+<mat-toolbar color="primary">
+	<span>Machine Detail</span>
+</mat-toolbar>
+<mat-toolbar>
+	<button mat-button routerLink="/machines">&larr; back to list</button>
+</mat-toolbar>
+<div class="content-wrapper">
+
+	<app-loading [loading]="loading$ | async"></app-loading>
+
+	<ng-container *ngIf="detail$ | async as data">
+		<div class="col-wrapper">
+			<mat-card class="data-col">
+				<mat-card-title>Machine Data</mat-card-title>
+				<mat-card-content>
+					<div class="row">
+						<div class="label">Id</div>
+						<div class="value">{{data.id}}</div>
+					</div>
+					<div class="row">
+						<div class="label">Status</div>
+						<div class="value">{{data.status}}</div>
+					</div>
+					<div class="row">
+						<div class="label">Machine type</div>
+						<div class="value">{{data.machine_type}}</div>
+					</div>
+					<div class="row">
+						<div class="label">Longitude</div>
+						<div class="value">{{data.longitude}}</div>
+					</div>
+					<div class="row">
+						<div class="label">Latitude</div>
+						<div class="value">{{data.latitude}}</div>
+					</div>
+					<div class="row">
+						<div class="label">Last maintenance</div>
+						<div class="value">{{data.last_maintenance | date:'short'}}</div>
+					</div>
+					<div class="row">
+						<div class="label">Install date</div>
+						<div class="value">{{data.install_date | date:'short'}}</div>
+					</div>
+					<div class="row">
+						<div class="label">Floor</div>
+						<div class="value">{{data.floor | date:'short'}}</div>
+					</div>
+				</mat-card-content>
+			</mat-card>
+			<mat-card class="events-col">
+				<mat-card-title>Latest events</mat-card-title>
+				<mat-card-content>
+					<div class="events-row">
+						<div class="date">Date</div>
+						<div class="status">Status</div>
+					</div>
+					<div class="events-row"
+							 *ngFor="let event of data.events"
+							 [class.item-highlight]="event.is_highlighted"
+					>
+						<div class="date">{{event.timestamp | date: 'short'}}</div>
+						<div class="status">{{event.status}}</div>
+					</div>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</ng-container>
+
+</div>

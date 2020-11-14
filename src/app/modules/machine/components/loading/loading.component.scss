@@ -1,0 +1,12 @@
+.loading {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+
+  .label {
+    margin-top: 10px;
+  }
+}
