@@ -2,26 +2,35 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
 
-## Development server
+## Docker
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Use docker commands to run this project
 
-## Code scaffolding
+Build image with
+ 
+`docker build -t machine-stream .`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Spin up container from your image
 
-## Build
+`docker run -p 80:80 --name angular-container -d machine-stream`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Or use docker-compose
 
-## Running unit tests
+`docker-compose up`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Open browser http://localhost:80 to see website in action!
 
-## Running end-to-end tests
+## Website content
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+/machines
+* displays a list of machines
+* click on a list item navigates to the detail page
 
-## Further help
+/machines/:id
+* shows machine detail data
+* shows list of latest events (data from API)
+* a socket stream updates events realtime
+* incoming events are added to top of events list
+* incoming event updates the "status" of machine data
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+!! Events are filtered by machine_id. For this reason  there is hardly any event coming in that matches the id of the current machine displayed. To see some events being added, this filter can be disabled in machine.service.ts line 37 `debugDisableMachineIdFilter` - this only works running the app locally with `ng serve` of course (or restarting the whole docker process)
